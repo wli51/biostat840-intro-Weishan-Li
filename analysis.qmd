@@ -1,0 +1,204 @@
+---
+title: "Example Analysis"
+bibliography: references.bib
+editor: visual
+---
+
+### This is a sample analysis
+
+#### I wish to explore whether automobile makers from different regions (Japanese, European, and U.S. have different emphasis (more horsepower, better fuel economy etc.) when they make their cars and engines).
+
+The intended audience for this analysis is those who are interested in cars and don't bother to see a oversimplified analysis.
+
+### Data
+
+Motor trend cars data from the ISLR package. [source](https://rdrr.io/cran/ISLR/man/Auto.html)[@ISLR]
+
+The data came from the StatLib library of the Carnegie Mellon University
+
+The original dataset Auto (which I copied into a variable cars_data in my analysis) has the following fields:
+
+| Fields             | description                                          |
+|-----------------------|-------------------------------------------------|
+| ***mpg***          | miles per gallon fuel consumption                    |
+| ***cylinders***    | number of engine cylinders                           |
+| ***displacement*** | engine displacement in cubic inches                  |
+| ***horsepower***   | engine horsepower                                    |
+| ***weight***       | vehicle weight in lbs                                |
+| ***acceleration*** | 0 - 60 acceleration time                             |
+| ***year***         | year of manufacture                                  |
+| ***origin***       | origin of car (1: american, 2: european, 3:japanese) |
+| ***name***         | name of car                                          |
+
+### Wrangling
+
+First extract the make of the car from the name column, it seems like that is the first token.
+
+Then manually factor the make by the region the makers are from, I divided the origin of the makes to Japanese, European, US and others.
+
+```{R}
+library(ISLR)
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(forcats)
+
+cars_data <- Auto 
+cars_data <- cars_data %>% 
+  mutate(name = str_replace(name, " ", "$")) %>% 
+  separate(name, into = c("brand", "name"), sep = "\\$")
+
+cars_data %>% drop_na()
+  
+japanese_brand = c("toyota", "toyouta", "honda", "mazda", "maxda", "nissan", "subaru")
+european_brand = c("bmw", "volkswagen", "mercedes", "mercedes-benz", "vw", "audi", "fiat", "peugeot", "renault", "volvo")
+us_brand = c("chevrolet", "chevroelt", "chevy", "buick", "amc", "ford", "dodge", "chrysler", "cadillac")
+
+cars_data <- cars_data %>% 
+  mutate(region_of_make = 
+           fct_collapse(brand, 
+                        japanese = japanese_brand, 
+                        european = european_brand, 
+                        us = us_brand,
+                        other_level = "other")) 
+
+```
+
+### Horsepower
+
+First let's look at the distribution of car horsepower
+
+```{R}
+library(ggplot2)
+cars_data %>% ggplot(aes(x=horsepower)) + geom_histogram(binwidth=20) + 
+  facet_grid(region_of_make~.) + 
+  labs(title="Distribution of engine horsepowers ", 
+       subtitle = "faceted by regions of make, binsize = 20",
+       caption = "The major european and japanese makers seemed very uninterested in making cars with >150 horsepower. The dataset documents mostly cars by U.S. manufacturers.") +
+  ylab("Count") +
+  xlab("Engine Horsepower")
+  
+
+```
+
+::: callout-important
+## Disclaimer
+
+The dataset does not seem to be anywhere close to a comprehensive dataset of automobiles in the 1970s to 1980s. So any trend oberserved here may be due to a selection bias.
+:::
+
+### Power to Displacement Ratio
+
+In addition to the horsepower and displacement data originally from the data set, compute the horsepower to displacement ratio, which is essentially an indicator of how efficient the engines are.
+
+![The volume in red is the engine displacement](https://upload.wikimedia.org/wikipedia/commons/8/8a/Displacement.gif){alt="The volume in red is the engine displacement" fig-alt="https://en.wikipedia.org/wiki/Engine_displacement"}
+
+
+```{R}
+cars_data <- cars_data %>% 
+  mutate(power_per_displacement = horsepower/displacement)
+
+group_statistics <- cars_data %>% group_by(region_of_make) %>% 
+  summarize(mean_cyl_count = mean(cylinders),
+            mean_displacement = mean(displacement), 
+            mean_power_to_displacement_ratio = mean(power_per_displacement),
+            mean_mpg = mean(mpg))  
+
+group_statistics
+```
+
+```{R}
+
+
+cars_data %>% ggplot(aes(x = horsepower, y=power_per_displacement, color=region_of_make)) + geom_point(aes(size=mpg), alpha=0.5) + 
+  labs(title="Horsepower vs. Power to Displacement ratio", 
+       subtitle = "Colored by region of manufacturer",
+       caption = "The major U.S. cars typically has much higher horsepower that is not achieved by engineering for higher power to displacement ratio. Also make note of the outliers at the top") +
+  ylab("Power to Displacement Ratio (Horsepower/Displacement)") +
+  xlab("Horsepower")
+
+```
+From the horsepower vs. power-to-displacement ratio plot, we can see that the US car makers are all about ramping up horsepowers but fall behind on engine efficiency.
+
+The rest of the car makers seemed to be making similar cars with mediocre horsepower and good power-to-displacement ratio. It is also inferrable from the plot that power-to-displacement ratio generally correlates with MPG, an indicator of fuel economy, which makes sense.
+
+::: callout-note
+Notably, there are 4 cars on the top of the plot that appear to have insanely high power-to-displacement ratio when compared to others. These are the Mazda Rx sport cars with rotary engines (as opposed to the traditional piston and cylinder engines). Rotary engines are known for their deceivingly small displacement size (they can consume more fuel than a traditional piston engine with 2-3 times its displacement), which can be seen on the plot that they had no different mpgs compared to other japanese and european cars. Perhaps rotary engine cars should be excluded from the analysis?
+:::
+
+### Power to Mass Ratio
+Power to mass ratio is a good indicator of a car's ability to accelerate fast, since having more power from the engine per unit weight of the car will help it overcome the inertia when the car is at a complete stop. 
+
+```{r}
+#| label: fig-power-to-mass
+#| fig-cap: "Power to Mass ratio vs. Acceleration time(lower is faster), colored by region of maker."
+#| column: margin
+library(ggplot2)
+
+cars_data %>% 
+  mutate(power_to_mass = horsepower/weight) %>%
+  ggplot(aes(x=power_to_mass, y= acceleration)) +
+  geom_point(aes(color=region_of_make)) +
+  geom_smooth(formula = y ~ x, method = "lm") +
+  theme(legend.position = 'bottom') +
+  ylab("0 to 60 mph Acceleration Time") + 
+  xlab("Power to Mass Ratio") + 
+  labs(title="Power to Mass vs Acceleration Time",
+       subtitle="Negative correlation can be observed")
+
+model <- cars_data %>% 
+  mutate(power_to_mass = horsepower/weight) %>% lm(formula = acceleration ~ power_to_mass)
+summary(model)
+```
+Seeing the margin plot and the summary of the fitted linear model[@LM], it is not to tell that the power to mass ratio is negatively correlated with the time it takes for a car to accelerate from 0 to 60mph (so positive correaltion with the ability to accelerate). 
+
+
+### Does engine efficiency improve over the 10 years or so?
+
+Although MPG is an direct indication of fuel economy, it is not an good indicator for engine efficiency because improvements in mileage can come from both increased engine efficiency and other factors like building lighter cars or making them more aerodynamic.
+
+The peak power to engine displacement ratio is considered to be a metric for engine efficiency[@FuelEfficiency]. It can be considered as a ratio of the power output of the engine (usually measured in Kw) to fuel consumption per engine cycle (which is proportional to the engine displacement). 
+
+```{R}
+cars_data <- cars_data %>% 
+  mutate(power_per_displacement = horsepower/displacement)
+
+cars_data %>% group_by(year, region_of_make) %>%
+  summarize(mean_cyl_count = mean(cylinders),
+            mean_displacement = mean(displacement), 
+            mean_power_to_displacement_ratio = mean(power_per_displacement),
+            sd_power_to_displacement_ratio = sd(power_per_displacement),
+            mean_mpg = mean(mpg)) %>% 
+  ggplot(aes(x = year, y=mean_power_to_displacement_ratio, color=region_of_make)) + 
+  geom_point(aes(size=mean_mpg), alpha=0.3) + 
+  geom_line() +
+  geom_errorbar(aes(ymin=mean_power_to_displacement_ratio-sd_power_to_displacement_ratio, ymax=mean_power_to_displacement_ratio+sd_power_to_displacement_ratio)) + facet_grid(region_of_make~.) + 
+  labs(title="Trends in Power to Displacement ratio over time", 
+       subtitle = "Faceted by Region",
+       caption = str_wrap("There is a slight increase in the mean Power to Displacement ratio by the US manufactures. We also observe a general decrease in that ratio for European and Japanese cars")) +
+  ylab("Mean Power to Displacement Ratio (Horsepower/Displacement)") +
+  xlab("Year") +
+  theme(plot.caption = element_text(hjust = 0))
+
+```
+Here we do observe a very slight increase in Power to Displacement ratio by the US makers, rising from around 0.5 in 1970 to around 0.6 in 1982. 
+On the other hand, the Power to Displacement ratio of European and Japanese cars have fallen since 1970. It is noteworthy still that by 1982, the both the European cars and the Japanese cars still have higher Power to Displacement Ratio compared to the US cars desipte the decline. 
+
+Also quite interestingly, here the Power to Displacement ratio alone does not seem to correlate with mpg well enough. While we do see a stead increase in both Power to Displacement and mpg in the US cars, the mpg for the European and Japanese cars increased despite the decline in Power to Displacement ratio (perhaps through the improvement of aerodynamics or weight reduction).  
+
+### Results Summary 
+
+During the 1970s and early 1980s, the US makers alone produces high horsepower (> 150hp) cars. 
+During this period we also see that the US cars generally has less Power to Displacement ratio compared to European and Japanese cars. 
+We also established that the higher Power to Mass ratio meant higher capability to accelerate. 
+At last we observed an improvement in US car Power to Displacement ratio along with mileage improvements, but the Europeans and Japanese cars are nontheless still more efficient. 
+
+### Functions used 
+1. mutate
+2. separate
+3. drop_na
+4. group_by
+5. summarize
+6. geom_histogram
+7. geom_point
+8. geom_line
