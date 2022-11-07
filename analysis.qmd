@@ -19,7 +19,7 @@ The data came from the StatLib library of the Carnegie Mellon University
 The original dataset Auto (which I copied into a variable cars_data in my analysis) has the following fields:
 
 | Fields             | description                                          |
-|--------------------|------------------------------------------------------|
+|-----------------------|------------------------------------------------|
 | ***mpg***          | miles per gallon fuel consumption                    |
 | ***cylinders***    | number of engine cylinders                           |
 | ***displacement*** | engine displacement in cubic inches                  |
@@ -48,7 +48,7 @@ cars_data <- cars_data %>%
   mutate(name = str_replace(name, " ", "$")) %>% 
   separate(name, into = c("brand", "name"), sep = "\\$")
 
-cars_data %>% drop_na()
+cars_data <- cars_data %>% drop_na()
   
 japanese_brand = c("toyota", "toyouta", "honda", "mazda", "maxda", "nissan", "subaru")
 european_brand = c("bmw", "volkswagen", "mercedes", "mercedes-benz", "vw", "audi", "fiat", "peugeot", "renault", "volvo")
