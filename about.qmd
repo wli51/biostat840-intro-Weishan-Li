@@ -2,8 +2,8 @@
 title: "About"
 ---
 
-#### **Hello, my name is Weishan Li**
+### More about me: 
 
-I completed my undergrad education on Biostatistics in UC SanDiego. And I devoted the bulk of my undergraduate extracurricular time to the development of analysis programs for neuro-fluorescence data.
+I completed my undergrad education on Biostatistics in UC SanDiego, where I devoted the bulk of my undergraduate extracurricular time to the development of analysis programs for neuro-fluorescence data.
 
-I am currently interested in the modelling of infectious disease transmission. But I will happily engage other research directions that involves the development of novel computational methods.
+Currently I am a 1st Year ScM Biostatistics students at JHSPH. I am interested in the modelling of infectious disease transmission. But I will happily engage other research directions that involves the development of novel computational methods.

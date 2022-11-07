@@ -2,10 +2,12 @@
 title: "Home page"
 ---
 
-### Hello, I am Weishan Li. This is a Quarto website I made for Statistical Programming Paradigms and Workflows Project 1.
+### Hello, 
 
-I graduated from UCSD with a BS in Biology w/th Spec Bioinformatics and is a current 1st Year ScM Biostatistics students at JHSPH. I enjoy computer gaming on my spare time.
+#### This is a Quarto website I made for Statistical Programming Paradigms and Workflows Project 1.
 
-```{r}
-1 + 1
-```
+I am Weishan Li. I came from Shanghai, China. After finishing high school there, I went to the U.S for college. In my spare times I play computer games.
+
+Recently I am enjoying putting together this split keyboard kit which is ergonomic-wise better for typing.
+
+![](thumbnail_Image.jpg)
