@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>website - Example Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">website</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./analysis.html" aria-current="page">Example Analysis</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#this-is-a-sample-analysis" id="toc-this-is-a-sample-analysis" class="nav-link active" data-scroll-target="#this-is-a-sample-analysis">This is a sample analysis</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#wrangling" id="toc-wrangling" class="nav-link" data-scroll-target="#wrangling">Wrangling</a></li>
+  <li><a href="#horsepower" id="toc-horsepower" class="nav-link" data-scroll-target="#horsepower">Horsepower</a></li>
+  <li><a href="#power-to-displacement-ratio" id="toc-power-to-displacement-ratio" class="nav-link" data-scroll-target="#power-to-displacement-ratio">Power to Displacement Ratio</a></li>
+  <li><a href="#power-to-mass-ratio" id="toc-power-to-mass-ratio" class="nav-link" data-scroll-target="#power-to-mass-ratio">Power to Mass Ratio</a></li>
+  <li><a href="#does-engine-efficiency-improve-over-the-10-years-or-so" id="toc-does-engine-efficiency-improve-over-the-10-years-or-so" class="nav-link" data-scroll-target="#does-engine-efficiency-improve-over-the-10-years-or-so">Does engine efficiency improve over the 10 years or so?</a></li>
+  <li><a href="#results-summary" id="toc-results-summary" class="nav-link" data-scroll-target="#results-summary">Results Summary</a></li>
+  <li><a href="#functions-used" id="toc-functions-used" class="nav-link" data-scroll-target="#functions-used">Functions used</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Example Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="this-is-a-sample-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="this-is-a-sample-analysis">This is a sample analysis</h3>
+<section id="i-wish-to-explore-whether-automobile-makers-from-different-regions-japanese-european-and-u.s.-have-different-emphasis-more-horsepower-better-fuel-economy-etc.-when-they-make-their-cars-and-engines." class="level4">
+<h4 class="anchored" data-anchor-id="i-wish-to-explore-whether-automobile-makers-from-different-regions-japanese-european-and-u.s.-have-different-emphasis-more-horsepower-better-fuel-economy-etc.-when-they-make-their-cars-and-engines.">I wish to explore whether automobile makers from different regions (Japanese, European, and U.S. have different emphasis (more horsepower, better fuel economy etc.) when they make their cars and engines).</h4>
+<p>The intended audience for this analysis is those who are interested in cars and don’t bother to see a oversimplified analysis.</p>
+</section>
+</section>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>Motor trend cars data from the ISLR package. <a href="https://rdrr.io/cran/ISLR/man/Auto.html">source</a><span class="citation" data-cites="ISLR">(<a href="#ref-ISLR" role="doc-biblioref">RDRR, n.d.</a>)</span></p>
+<p>The data came from the StatLib library of the Carnegie Mellon University</p>
+<p>The original dataset Auto (which I copied into a variable cars_data in my analysis) has the following fields:</p>
+<table class="table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 67%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fields</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><em>mpg</em></strong></td>
+<td>miles per gallon fuel consumption</td>
+</tr>
+<tr class="even">
+<td><strong><em>cylinders</em></strong></td>
+<td>number of engine cylinders</td>
+</tr>
+<tr class="odd">
+<td><strong><em>displacement</em></strong></td>
+<td>engine displacement in cubic inches</td>
+</tr>
+<tr class="even">
+<td><strong><em>horsepower</em></strong></td>
+<td>engine horsepower</td>
+</tr>
+<tr class="odd">
+<td><strong><em>weight</em></strong></td>
+<td>vehicle weight in lbs</td>
+</tr>
+<tr class="even">
+<td><strong><em>acceleration</em></strong></td>
+<td>0 - 60 acceleration time</td>
+</tr>
+<tr class="odd">
+<td><strong><em>year</em></strong></td>
+<td>year of manufacture</td>
+</tr>
+<tr class="even">
+<td><strong><em>origin</em></strong></td>
+<td>origin of car (1: american, 2: european, 3:japanese)</td>
+</tr>
+<tr class="odd">
+<td><strong><em>name</em></strong></td>
+<td>name of car</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wrangling" class="level3">
+<h3 class="anchored" data-anchor-id="wrangling">Wrangling</h3>
+<p>First extract the make of the car from the name column, it seems like that is the first token.</p>
+<p>Then manually factor the make by the region the makers are from, I divided the origin of the makes to Japanese, European, US and others.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+载入程辑包：'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>cars_data <span class="ot">&lt;-</span> Auto </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cars_data <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">" "</span>, <span class="st">"$"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"brand"</span>, <span class="st">"name"</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Expected 2 pieces. Missing pieces filled with `NA` in 2 rows [149,
+343].</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cars_data <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>japanese_brand <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"toyota"</span>, <span class="st">"toyouta"</span>, <span class="st">"honda"</span>, <span class="st">"mazda"</span>, <span class="st">"maxda"</span>, <span class="st">"nissan"</span>, <span class="st">"subaru"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>european_brand <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"bmw"</span>, <span class="st">"volkswagen"</span>, <span class="st">"mercedes"</span>, <span class="st">"mercedes-benz"</span>, <span class="st">"vw"</span>, <span class="st">"audi"</span>, <span class="st">"fiat"</span>, <span class="st">"peugeot"</span>, <span class="st">"renault"</span>, <span class="st">"volvo"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>us_brand <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"chevrolet"</span>, <span class="st">"chevroelt"</span>, <span class="st">"chevy"</span>, <span class="st">"buick"</span>, <span class="st">"amc"</span>, <span class="st">"ford"</span>, <span class="st">"dodge"</span>, <span class="st">"chrysler"</span>, <span class="st">"cadillac"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>cars_data <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">region_of_make =</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">fct_collapse</span>(brand, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">japanese =</span> japanese_brand, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">european =</span> european_brand, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">us =</span> us_brand,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">other_level =</span> <span class="st">"other"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="horsepower" class="level3">
+<h3 class="anchored" data-anchor-id="horsepower">Horsepower</h3>
+<p>First let’s look at the distribution of car horsepower</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cars_data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>horsepower)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span><span class="dv">20</span>) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(region_of_make<span class="sc">~</span>.) <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of engine horsepowers "</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"faceted by regions of make, binsize = 20"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"The major european and japanese makers seemed very uninterested in making cars with &gt;150 horsepower. The dataset documents mostly cars by U.S. manufacturers."</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Engine Horsepower"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Disclaimer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The dataset does not seem to be anywhere close to a comprehensive dataset of automobiles in the 1970s to 1980s. So any trend oberserved here may be due to a selection bias.</p>
+</div>
+</div>
+</section>
+<section id="power-to-displacement-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="power-to-displacement-ratio">Power to Displacement Ratio</h3>
+<p>In addition to the horsepower and displacement data originally from the data set, compute the horsepower to displacement ratio, which is essentially an indicator of how efficient the engines are.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Displacement.gif" class="img-fluid figure-img" alt="https://en.wikipedia.org/wiki/Engine_displacement"></p>
+<p></p><figcaption class="figure-caption">The volume in red is the engine displacement</figcaption><p></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cars_data <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">power_per_displacement =</span> horsepower<span class="sc">/</span>displacement)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>group_statistics <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(region_of_make) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_cyl_count =</span> <span class="fu">mean</span>(cylinders),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_displacement =</span> <span class="fu">mean</span>(displacement), </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_power_to_displacement_ratio =</span> <span class="fu">mean</span>(power_per_displacement),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_mpg =</span> <span class="fu">mean</span>(mpg))  </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>group_statistics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  region_of_make mean_cyl_count mean_displacement mean_power_to_displa…¹ mean_…²
+  &lt;fct&gt;                   &lt;dbl&gt;             &lt;dbl&gt;                  &lt;dbl&gt;   &lt;dbl&gt;
+1 us                       6.26              247.                  0.512    19.8
+2 european                 4.19              109.                  0.729    27.8
+3 japanese                 4.04              102.                  0.779    30.2
+4 other                    5.63              204.                  0.609    23.6
+# … with abbreviated variable names ¹​mean_power_to_displacement_ratio,
+#   ²​mean_mpg</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cars_data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> horsepower, <span class="at">y=</span>power_per_displacement, <span class="at">color=</span>region_of_make)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size=</span>mpg), <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Horsepower vs. Power to Displacement ratio"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Colored by region of manufacturer"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"The major U.S. cars typically has much higher horsepower that is not achieved by engineering for higher power to displacement ratio. Also make note of the outliers at the top"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Power to Displacement Ratio (Horsepower/Displacement)"</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Horsepower"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the horsepower vs.&nbsp;power-to-displacement ratio plot, we can see that the US car makers are all about ramping up horsepowers but fall behind on engine efficiency.</p>
+<p>The rest of the car makers seemed to be making similar cars with mediocre horsepower and good power-to-displacement ratio. It is also inferrable from the plot that power-to-displacement ratio generally correlates with MPG, an indicator of fuel economy, which makes sense.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notably, there are 4 cars on the top of the plot that appear to have insanely high power-to-displacement ratio when compared to others. These are the Mazda Rx sport cars with rotary engines (as opposed to the traditional piston and cylinder engines). Rotary engines are known for their deceivingly small displacement size (they can consume more fuel than a traditional piston engine with 2-3 times its displacement), which can be seen on the plot that they had no different mpgs compared to other japanese and european cars. Perhaps rotary engine cars should be excluded from the analysis?</p>
+</div>
+</div>
+</section>
+<section id="power-to-mass-ratio" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="power-to-mass-ratio">Power to Mass Ratio</h3>
+<p>Power to mass ratio is a good indicator of a car’s ability to accelerate fast, since having more power from the engine per unit weight of the car will help it overcome the inertia when the car is at a complete stop.</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cars_data <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">power_to_mass =</span> horsepower<span class="sc">/</span>weight) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>power_to_mass, <span class="at">y=</span> acceleration)) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>region_of_make)) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'bottom'</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"0 to 60 mph Acceleration Time"</span>) <span class="sc">+</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Power to Mass Ratio"</span>) <span class="sc">+</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Power to Mass vs Acceleration Time"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Negative correlation can be observed"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">power_to_mass =</span> horsepower<span class="sc">/</span>weight) <span class="sc">%&gt;%</span> <span class="fu">lm</span>(<span class="at">formula =</span> acceleration <span class="sc">~</span> power_to_mass)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = acceleration ~ power_to_mass, data = .)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.3079 -1.3019 -0.1307  1.0270  7.4830 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     27.443      0.565   48.57   &lt;2e-16 ***
+power_to_mass -341.869     15.991  -21.38   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.875 on 388 degrees of freedom
+Multiple R-squared:  0.5408,    Adjusted R-squared:  0.5397 
+F-statistic:   457 on 1 and 388 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-power-to-mass" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/fig-power-to-mass-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 1: Power to Mass ratio vs.&nbsp;Acceleration time(lower is faster), colored by region of maker.</figcaption><p></p>
+</figure>
+</div>
+</div></div></div>
+<p>Seeing the margin plot and the summary of the fitted linear model<span class="citation" data-cites="LM">(<a href="#ref-LM" role="doc-biblioref">RDocumentation, n.d.</a>)</span>, it is not to tell that the power to mass ratio is negatively correlated with the time it takes for a car to accelerate from 0 to 60mph (so positive correaltion with the ability to accelerate).</p>
+</section>
+<section id="does-engine-efficiency-improve-over-the-10-years-or-so" class="level3">
+<h3 class="anchored" data-anchor-id="does-engine-efficiency-improve-over-the-10-years-or-so">Does engine efficiency improve over the 10 years or so?</h3>
+<p>Although MPG is an direct indication of fuel economy, it is not an good indicator for engine efficiency because improvements in mileage can come from both increased engine efficiency and other factors like building lighter cars or making them more aerodynamic.</p>
+<p>The peak power to engine displacement ratio is considered to be a metric for engine efficiency<span class="citation" data-cites="FuelEfficiency">(<a href="#ref-FuelEfficiency" role="doc-biblioref">DeCicco 2010</a>)</span>. It can be considered as a ratio of the power output of the engine (usually measured in Kw) to fuel consumption per engine cycle (which is proportional to the engine displacement).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cars_data <span class="ot">&lt;-</span> cars_data <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">power_per_displacement =</span> horsepower<span class="sc">/</span>displacement)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>cars_data <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(year, region_of_make) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_cyl_count =</span> <span class="fu">mean</span>(cylinders),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_displacement =</span> <span class="fu">mean</span>(displacement), </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_power_to_displacement_ratio =</span> <span class="fu">mean</span>(power_per_displacement),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_power_to_displacement_ratio =</span> <span class="fu">sd</span>(power_per_displacement),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_mpg =</span> <span class="fu">mean</span>(mpg)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y=</span>mean_power_to_displacement_ratio, <span class="at">color=</span>region_of_make)) <span class="sc">+</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size=</span>mean_mpg), <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>mean_power_to_displacement_ratio<span class="sc">-</span>sd_power_to_displacement_ratio, <span class="at">ymax=</span>mean_power_to_displacement_ratio<span class="sc">+</span>sd_power_to_displacement_ratio)) <span class="sc">+</span> <span class="fu">facet_grid</span>(region_of_make<span class="sc">~</span>.) <span class="sc">+</span> </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Trends in Power to Displacement ratio over time"</span>, </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Faceted by Region"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="fu">str_wrap</span>(<span class="st">"There is a slight increase in the mean Power to Displacement ratio by the US manufactures. We also observe a general decrease in that ratio for European and Japanese cars"</span>)) <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Mean Power to Displacement Ratio (Horsepower/Displacement)"</span>) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'year'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here we do observe a very slight increase in Power to Displacement ratio by the US makers, rising from around 0.5 in 1970 to around 0.6 in 1982. On the other hand, the Power to Displacement ratio of European and Japanese cars have fallen since 1970. It is noteworthy still that by 1982, the both the European cars and the Japanese cars still have higher Power to Displacement Ratio compared to the US cars desipte the decline.</p>
+<p>Also quite interestingly, here the Power to Displacement ratio alone does not seem to correlate with mpg well enough. While we do see a stead increase in both Power to Displacement and mpg in the US cars, the mpg for the European and Japanese cars increased despite the decline in Power to Displacement ratio (perhaps through the improvement of aerodynamics or weight reduction).</p>
+</section>
+<section id="results-summary" class="level3">
+<h3 class="anchored" data-anchor-id="results-summary">Results Summary</h3>
+<p>During the 1970s and early 1980s, the US makers alone produces high horsepower (&gt; 150hp) cars. During this period we also see that the US cars generally has less Power to Displacement ratio compared to European and Japanese cars. We also established that the higher Power to Mass ratio meant higher capability to accelerate. At last we observed an improvement in US car Power to Displacement ratio along with mileage improvements, but the Europeans and Japanese cars are nontheless still more efficient.</p>
+</section>
+<section id="functions-used" class="level3">
+<h3 class="anchored" data-anchor-id="functions-used">Functions used</h3>
+<ol type="1">
+<li>mutate</li>
+<li>separate</li>
+<li>drop_na</li>
+<li>group_by</li>
+<li>summarize</li>
+<li>geom_histogram</li>
+<li>geom_point</li>
+<li>geom_line</li>
+</ol>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-FuelEfficiency" class="csl-entry" role="doc-biblioentry">
+DeCicco, John. 2010. <span>“A Fuel Efficiency Horizon for u.s. Automobiles,”</span> October.
+</div>
+<div id="ref-LM" class="csl-entry" role="doc-biblioentry">
+RDocumentation. n.d. <span>“Lm: Fitting Linear Models.”</span> <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm">https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm</a>.
+</div>
+<div id="ref-ISLR" class="csl-entry" role="doc-biblioentry">
+RDRR. n.d. <span>“Auto: Auto Data Set.”</span> <a href="https://rdrr.io/cran/ISLR/man/Auto.html">https://rdrr.io/cran/ISLR/man/Auto.html</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
